@@ -50,7 +50,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
@@ -58,6 +57,7 @@ public class Main extends javax.swing.JFrame {
         lblcontent = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(765, 500));
@@ -67,15 +67,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
-
-        jButton1.setText("ByDay");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(670, 10, 63, 23);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(765, 474));
 
@@ -109,13 +100,17 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(lblcontent);
         lblcontent.setBounds(90, 280, 400, 14);
 
-        jButton4.setText("View Events");
+        jButton4.setText("Save");
         getContentPane().add(jButton4);
         jButton4.setBounds(20, 340, 120, 40);
 
         jButton5.setText("Predict Events");
         getContentPane().add(jButton5);
-        jButton5.setBounds(20, 400, 120, 40);
+        jButton5.setBounds(610, 10, 120, 40);
+
+        jButton6.setText("View Events");
+        getContentPane().add(jButton6);
+        jButton6.setBounds(20, 400, 120, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,26 +179,6 @@ public class Main extends javax.swing.JFrame {
    }
    
    
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            ByDayy byday;
-            byday = new ByDayy("2017-09-03-1");
-            
-            float Percentage=byday.getPercentageByDay();
-           
-            
-            String [] occurdates = byday.getOccureDates();
-            JOptionPane.showMessageDialog(null, Percentage+"%");
-            
-            for (int i =0 ;i<occurdates.length;i++)
-            {
-                JOptionPane.showMessageDialog(null, occurdates[i]);
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Record obj = new Record();
         obj.show();
@@ -253,10 +228,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
