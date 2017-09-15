@@ -37,6 +37,7 @@ public class Main extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -47,7 +48,7 @@ public class Main extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 311, Short.MAX_VALUE)
+            .addGap(0, 252, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Activity", jPanel1);
@@ -60,13 +61,13 @@ public class Main extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 311, Short.MAX_VALUE)
+            .addGap(0, 252, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Prediction", jPanel2);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(40, 60, 546, 339);
+        jTabbedPane1.setBounds(40, 40, 546, 280);
 
         jButton1.setText("ByDay");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

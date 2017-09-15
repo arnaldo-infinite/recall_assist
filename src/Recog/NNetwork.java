@@ -53,7 +53,7 @@ public class NNetwork
            
           
           double wsum = w1 * data1[random] + w2 * data2[random] + b;
-          double predict1 = sigmoid(wsum);
+          double predict1 = sigmoid(wsum);  //activate function
           
           
           double cost = (predict1-target) * (predict1-target);
