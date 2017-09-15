@@ -5,19 +5,10 @@
  */
 package Recog;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
-import edu.cmu.sphinx.frontend.util.Microphone;
-import edu.cmu.sphinx.recognizer.Recognizer;
-import edu.cmu.sphinx.result.Result;
-import edu.cmu.sphinx.util.props.ConfigurationManager;
-import edu.cmu.sphinx.util.props.PropertyException;
+
 
 /**
  *
@@ -29,15 +20,9 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
-//        url = Main.class.getResource("recallassist.config.xml");
         
     }
-//    URL url;
-//    ConfigurationManager cm;
-//    Recognizer recognizer;
-//    Microphone microphone;
-//    Result result;
-//    String resultText;
+
     String Content="";
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +31,7 @@ public class Main extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     
-//    int button=0;
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -114,65 +99,17 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//   private void recordingstart(URL url)
-//    {
-//        try {
-//            if (button==0)
-//            {
-//            this.cm = new ConfigurationManager(url);
-//
-//	    recognizer = (Recognizer) cm.lookup("recognizer");
-//	    microphone = (Microphone) cm.lookup("microphone");
-//            }
-//            
-//            
-//            button=1;
-//            /* allocate the resource necessary for the recognizer */
-//            recognizer.allocate();
-//
-//            
-//            /* the microphone will keep recording until the program exits */
-//	    if (microphone.startRecording()) {
-//
-//		System.out.println
-//		    ("Say: (Good morning | Hello) " +
-//                     "( Bhiksha | Evandro | Paul | Philip | Rita | Will )");
-//
-//		
-//		    System.out.println
-//			("Start speaking. Press Ctrl-C to quit.\n");
-//
-//                    /*
-//                     * This method will return when the end of speech
-//                     * is reached. Note that the endpointer will determine
-//                     * the end of speech.
-//                     */ 
-//		     result = recognizer.recognize();
-//		    
-//		    if (result != null) {
-//			resultText = result.getBestFinalResultNoFiller();
-//			System.out.println("You said: " + resultText + "\n");
-//		    } else {
-//			System.out.println("I can't hear what you said.\n");
-//		    }
-//		
-//	    } else {
-//		System.out.println("Cannot start microphone.");
-//		recognizer.deallocate();
-//		System.exit(1);
-//	    }
-//        } catch (IOException e) {
-//            System.err.println("Problem when loading HelloWorld: " + e);
-//            e.printStackTrace();
-//        } catch (PropertyException e) {
-//            System.err.println("Problem configuring HelloWorld: " + e);
-//            e.printStackTrace();
-//        } catch (InstantiationException e) {
-//            System.err.println("Problem creating HelloWorld: " + e);
-//            e.printStackTrace();
-//        }
-//    }
+
    
+    
+    
+    
+    
+    
+    
+    
+    
+    
    public void setContent (String Content)
    {
        this.Content=Content;
@@ -186,12 +123,25 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if (Content.length()>0)
-        {
             lblcontent.setText(Content);
-        }
     }//GEN-LAST:event_formWindowOpened
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */

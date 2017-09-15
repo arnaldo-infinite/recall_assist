@@ -53,7 +53,7 @@ public class ByDayy
         try
         { 
             con=objCon.getConnection();
-            PreparedStatement stat1=con.prepareStatement("select Words_Score from recordings where RID=?");
+            PreparedStatement stat1=con.prepareStatement("select Words_Score from word, recording where word.RID=? AND word.RID=recording.RID");
             stat1.setString(1,this.RID);
             ResultSet rst1=stat1.executeQuery();
             
@@ -99,7 +99,7 @@ public class ByDayy
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 //            PreparedStatement stat1=con.prepareStatement("select RID,Words_Score from recordings where (RID like '"+Day1+"' OR RID like '"+Day2+"' OR RID like '"+Day3+"' OR RID like '"+Day4+"' OR RID like '"+Day5+"' OR RID like '"+Day6+"') AND Words_Score='"+WordScore+"'");
             
-            ResultSet rst1=stmt.executeQuery("select RID,Words_Score from recordings where (RID like '"+Day1+"' OR RID like '"+Day2+"' OR RID like '"+Day3+"' OR RID like '"+Day4+"' OR RID like '"+Day5+"' OR RID like '"+Day6+"') AND Words_Score='"+WordScore+"' order by RID asc");
+            ResultSet rst1=stmt.executeQuery("select RID,Words_Score from word where (RID like '"+Day1+"' OR RID like '"+Day2+"' OR RID like '"+Day3+"' OR RID like '"+Day4+"' OR RID like '"+Day5+"' OR RID like '"+Day6+"') AND Words_Score='"+WordScore+"' order by RID asc");
             
             while(rst1.next())
             {
