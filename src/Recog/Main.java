@@ -6,6 +6,13 @@
 package Recog;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -16,14 +23,21 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JFrame {
 
-    
-    
-    public Main() {
+
+    public Main() 
+    {
         initComponents();
-        
     }
 
-    String Content="";
+    private String Content="";
+    private int sentence_score;
+    private int words_score;
+    private int words_count;
+    private String RID="";
+    private String LastDay="";
+    Connection con;
+    ConnectionClass objcon= new ConnectionClass();
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,8 +53,8 @@ public class Main extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        lblcontent = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        label_content = new javax.swing.JLabel();
+        but_save = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -81,13 +95,18 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(20, 280, 60, 14);
 
-        lblcontent.setText("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-        getContentPane().add(lblcontent);
-        lblcontent.setBounds(90, 280, 400, 14);
+        label_content.setText("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+        getContentPane().add(label_content);
+        label_content.setBounds(90, 280, 400, 14);
 
-        jButton4.setText("Save");
-        getContentPane().add(jButton4);
-        jButton4.setBounds(20, 340, 120, 40);
+        but_save.setText("Save");
+        but_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_saveActionPerformed(evt);
+            }
+        });
+        getContentPane().add(but_save);
+        but_save.setBounds(20, 340, 120, 40);
 
         jButton5.setText("Predict Events");
         getContentPane().add(jButton5);
@@ -101,35 +120,250 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   public void setContent (String Content)
+    public void setContent (String Content)
    {
        this.Content=Content;
    }
-   
+    
+    
+    
+    
+    
+    
+    
+    
+
    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        viewRecorder();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+   
+    
+    
+    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        setSaidLabel();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void but_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_saveActionPerformed
+        insertData ();
+    }//GEN-LAST:event_but_saveActionPerformed
+
+    
+     private void viewRecorder()
+    {
         Record obj = new Record();
         obj.show();
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }
+     
+     private void setSaidLabel()
+     {
+         label_content.setText(Content);
+     }
+     
+     private void genScores(String Content)
+     {
+         WordScorer obj = new WordScorer(Content);
+         obj.processData();
+         this.sentence_score=obj.gettotalscore();
+         
+         obj.processUnwantedData();
+         this.words_score=obj.gettotalscore();
+         this.words_count=obj.getarraywords().length;
+     }
+     
+     private String getToday()
+     {
+         String Today="";
+         
+         DateManager dmanager = new DateManager();
+         Today=dmanager.getToday();
+         
+         return Today;
+     }
+     
+     private void genRID()
+     {
+         String RID="";
+         con=objcon.getConnection();
+         try
+         {
+            String ID="";
+           
+            PreparedStatement stat1=con.prepareStatement("select RID from recording order by RID asc");
+            ResultSet rst1=stat1.executeQuery();
+            
+            while (rst1.next())
+            {
+                ID = rst1.getString("RID");
+            }
+            
+            ID = ID.substring(ID.lastIndexOf('-') + 1);
+          
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-            lblcontent.setText(Content);
-    }//GEN-LAST:event_formWindowOpened
+            int IDS = Integer.parseInt(ID);
+            IDS=IDS+1;
+            
+            RID=String.valueOf(IDS);
+            stat1.close();
+         }
+         catch (Exception e1)
+         {
+             JOptionPane.showMessageDialog(null,"Error Generating RID "+e1.toString());
+         }
+         finally
+         {
+             try {
+                 con.close();
+             } catch (SQLException ex) {
+                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         }
+         this.RID=RID;
+     }
+     
+     private void lastDate()
+     {
+        String date="";
+         con=objcon.getConnection();
+         try
+         {
+            String temp="";
+           
+            PreparedStatement stat1=con.prepareStatement("select RID from recording order by RID asc");
+            ResultSet rst1=stat1.executeQuery();
+            
+            while (rst1.next())
+            {
+                temp = rst1.getString("RID").trim();
+            }
+         
+            date=temp.substring(0,10);
+            stat1.close();
+         }
+         catch (Exception e1)
+         {
+             JOptionPane.showMessageDialog(null,"Error Generating lastDate "+e1.toString());
+         }
+         finally
+         {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         }
+         this.LastDay=date;
+     }
+     
+     private void insertData ()
+     {
+         if (Content.length()>0)
+         {
+            String Today = getToday();
+            Today = Today.substring(0,10);
 
+            lastDate();
+            String LastDaystring = this.LastDay;
+
+            genScores(Content);
+
+            Calendar cal = Calendar.getInstance();
+            java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
+
+            if (Today.equals(LastDaystring))
+            {
+                genRID();
+                con=objcon.getConnection();
+                try
+                {
+                    PreparedStatement stat2=con.prepareStatement("insert into recording values (?,?,?,?)");
+
+                        stat2.setString(1,this.RID);
+                        stat2.setString(2,this.Content);
+                        stat2.setInt(3,this.sentence_score);
+                        stat2.setTimestamp(4,timestamp);
+
+                        int row1=stat2.executeUpdate();
+
+                        stat2.close();
+
+
+                    PreparedStatement stat3=con.prepareStatement("insert into word values (?,?,?)"); 
+
+                        stat2.setString(1,this.RID);
+                        stat2.setInt(2,this.words_score);
+                        stat2.setInt(3,this.words_count);
+
+                        int row2=stat3.executeUpdate();
+
+
+                        if (row1>0 && row2>0){
+                            JOptionPane.showMessageDialog(null,"Record Inserted");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null,"Record Not Inserted !");
+                        }
+
+                }
+                catch (Exception e2)
+                {
+                    JOptionPane.showMessageDialog(null,"Error Inserting Record"+e2.toString());
+                }
+            }
+            else
+            {
+                con=objcon.getConnection();
+                String newRID=Today;
+                newRID = newRID+"-1";
+                try
+                {
+                    PreparedStatement stat2=con.prepareStatement("insert into recording values (?,?,?,?)");
+
+                        stat2.setString(1,newRID);
+                        stat2.setString(2,this.Content);
+                        stat2.setInt(3,this.sentence_score);
+                        stat2.setTimestamp(4,timestamp);
+
+                        int row1=stat2.executeUpdate();
+
+                        stat2.close();
+
+
+                    PreparedStatement stat3=con.prepareStatement("insert into word values (?,?,?)"); 
+
+                        stat3.setString(1,newRID);
+                        stat3.setInt(2,this.words_score);
+                        stat3.setInt(3,this.words_count);
+
+                        int row2=stat3.executeUpdate();
+
+
+                        if (row1>0 && row2>0){
+                            JOptionPane.showMessageDialog(null,"Record Inserted");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null,"Record Not Inserted !");
+                        }
+                        stat3.close();
+                }
+                catch (Exception e2)
+                {
+                    JOptionPane.showMessageDialog(null,"Error Inserting Record"+e2.toString());
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"No Recording was made");
+        }
+     }
     
-    
-    
-    
+ 
+       
+       
     
     
     
@@ -178,13 +412,13 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton but_save;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblcontent;
+    private javax.swing.JLabel label_content;
     // End of variables declaration//GEN-END:variables
 }

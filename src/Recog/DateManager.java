@@ -25,6 +25,7 @@ public class DateManager
     private String Day6;
     private String yesterday;
     private String DBY;
+    private String Today;
     
     public void setDates(String Date) throws ParseException
     {
@@ -91,6 +92,19 @@ public class DateManager
         
         cal.add(Calendar.DATE, -2);
         DBY=dateFormat.format(cal.getTime());
+    }
+    
+    public String getToday ()
+    {
+        String Today;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        Today=dateFormat.format(cal.getTime());
+        
+        return Today;
     }
     
     public String genDAT(String Date) throws ParseException
