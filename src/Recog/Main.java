@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -27,14 +27,17 @@ public class Main extends javax.swing.JFrame {
     public Main() 
     {
         initComponents();
+        model2=(DefaultTableModel)tbl_todayevents.getModel();
     }
-
+    DefaultTableModel model2;
     private String Content="";
     private int sentence_score;
     private int words_score;
     private int words_count;
     private String RID="";
     private String LastDay="";
+    String [] Time;
+    String [] Contents;
     Connection con;
     ConnectionClass objcon= new ConnectionClass();
     
@@ -50,13 +53,14 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_todayevents = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         label_content = new javax.swing.JLabel();
         but_save = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(765, 500));
@@ -69,7 +73,7 @@ public class Main extends javax.swing.JFrame {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(765, 474));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_todayevents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,10 +81,10 @@ public class Main extends javax.swing.JFrame {
                 "Time", "Content"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_todayevents);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(510, 60, 220, 380);
+        jScrollPane1.setBounds(420, 60, 310, 380);
 
         jButton3.setText("Start Recording");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -109,12 +113,27 @@ public class Main extends javax.swing.JFrame {
         but_save.setBounds(20, 340, 120, 40);
 
         jButton5.setText("Predict Events");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton5);
         jButton5.setBounds(610, 10, 120, 40);
 
         jButton6.setText("View Events");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6);
         jButton6.setBounds(20, 400, 120, 40);
+
+        jLabel3.setFont(new java.awt.Font("Tekton Pro", 1, 24)); // NOI18N
+        jLabel3.setText("Main Panel");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(20, 20, 103, 25);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -144,12 +163,36 @@ public class Main extends javax.swing.JFrame {
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         setSaidLabel();
+        fillTable();
     }//GEN-LAST:event_formWindowOpened
 
     private void but_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_saveActionPerformed
         insertData ();
+        Content="";
+        label_content.setText(Content);
     }//GEN-LAST:event_but_saveActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        callViewEvents();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        callPredictEvents();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void callViewEvents()
+    {
+        ViewEvents obj = new ViewEvents();
+        obj.show();
+        this.dispose();
+    }
+    
+    private void callPredictEvents()
+    {
+        PredictEvents obj = new PredictEvents();
+        obj.show();
+        this.dispose();
+    }
     
      private void viewRecorder()
     {
@@ -290,7 +333,6 @@ public class Main extends javax.swing.JFrame {
 
                         stat2.close();
 
-
                     PreparedStatement stat3=con.prepareStatement("insert into word values (?,?,?)"); 
 
                         stat2.setString(1,this.RID);
@@ -298,7 +340,6 @@ public class Main extends javax.swing.JFrame {
                         stat2.setInt(3,this.words_count);
 
                         int row2=stat3.executeUpdate();
-
 
                         if (row1>0 && row2>0){
                             JOptionPane.showMessageDialog(null,"Record Inserted");
@@ -331,7 +372,6 @@ public class Main extends javax.swing.JFrame {
 
                         stat2.close();
 
-
                     PreparedStatement stat3=con.prepareStatement("insert into word values (?,?,?)"); 
 
                         stat3.setString(1,newRID);
@@ -360,18 +400,83 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"No Recording was made");
         }
      }
+     
+     
+     private void fillTable()
+     {
+         String Today = getToday();
+         Today = Today.substring(0,10);
+         Today=Today+"%";
+         int temp=0;
+         con=objcon.getConnection();
+         try
+         {
+            PreparedStatement stat1=con.prepareStatement("select RID,Content,RDate from recording where RID like '"+Today+"' order by RID asc");
+            ResultSet rst1=stat1.executeQuery();
+            
+            while (rst1.next())
+            {
+                temp ++;
+            }
+            stat1.close();
+        }
+         catch (Exception e1)
+         {
+             JOptionPane.showMessageDialog(null,"Error Generating Table 1 "+e1.toString());
+         }
+         finally
+         {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         }
+         
+         if (temp>0)
+         {
+            Time = new String[temp];
+            Contents = new String[temp];
+            filltable2(temp, Today);
+         }
+     }
+     
+     private void filltable2(int temp, String Today)
+     {
+         int count=0;
+         con=objcon.getConnection();
+         try
+         {
+                PreparedStatement stat2=con.prepareStatement("select RID,Content,RDate from recording where RID like '"+Today+"' order by RID asc");
+                ResultSet rst2=stat2.executeQuery();
+                while (rst2.next())
+            {
+                Contents[count]=rst2.getString("Content");
+                Time[count]=rst2.getString("RDate");
+                count++;
+            }
+         }
+         catch (Exception e1)
+         {
+             JOptionPane.showMessageDialog(null,"Error Generating Table 2 "+e1);
+         }
+         finally
+         {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         }
+        for(int i =0 ; i<count;i++)
+        {
+        model2.addRow(new Object[]{Time[i],Contents[i]});
+        }
+        
+     }
     
  
        
-       
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -406,7 +511,7 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+            new Main().setVisible(true);
             }
         });
     }
@@ -417,8 +522,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel label_content;
+    private javax.swing.JTable tbl_todayevents;
     // End of variables declaration//GEN-END:variables
 }

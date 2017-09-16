@@ -50,7 +50,6 @@ public class Test2 {
         System.out.println(Today);
         
         
-        
 //        ByDay byday = new ByDay("2017-09-03-1");
 //        
 //        String [] Occurence=byday.getOccureDates();
