@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Recog;
+package Interfaces;
 
 
+import Recog.ConnectionClass;
+import Recog.DateManager;
+import Recog.PredictEvents;
+import Recog.WordScorer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

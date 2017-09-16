@@ -5,6 +5,7 @@
  */
 package Recog;
 
+import Interfaces.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
