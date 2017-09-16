@@ -6,8 +6,8 @@
 package Interfaces;
 
 import Interfaces.Main;
-import Recog.ConnectionClass;
-import Recog.DateManager;
+import Data.ConnectionClass;
+import Data.DateManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

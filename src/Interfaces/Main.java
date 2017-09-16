@@ -6,10 +6,10 @@
 package Interfaces;
 
 
-import Recog.ConnectionClass;
-import Recog.DateManager;
-import Recog.PredictEvents;
-import Recog.WordScorer;
+import Data.ConnectionClass;
+import Data.DateManager;
+import Data.PredictEvents;
+import Data.WordScorer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
