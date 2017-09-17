@@ -8,7 +8,7 @@ package Interfaces;
 
 import Data.ConnectionClass;
 import Data.DateManager;
-import Data.PredictEvents;
+import Interfaces.PredictEvents;
 import Data.WordScorer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -65,6 +65,7 @@ public class Main extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(765, 500));
@@ -99,9 +100,9 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jButton3);
         jButton3.setBounds(200, 210, 120, 40);
 
-        jLabel1.setText("You Said - ");
+        jLabel1.setText("Today Events");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 280, 60, 14);
+        jLabel1.setBounds(420, 40, 70, 14);
 
         label_content.setText("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         getContentPane().add(label_content);
@@ -137,7 +138,11 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tekton Pro", 1, 24)); // NOI18N
         jLabel3.setText("Main Panel");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 20, 103, 25);
+        jLabel3.setBounds(10, 10, 103, 25);
+
+        jLabel2.setText("You Said - ");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(20, 280, 60, 14);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -526,6 +531,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_content;

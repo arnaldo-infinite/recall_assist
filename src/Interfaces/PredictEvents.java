@@ -3,8 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Data;
+package Interfaces;
 
+import Data.ByDayy;
+import Data.ByOneDay;
+import Data.ByTwoDay;
+import Data.ConnectionClass;
+import Data.DateManager;
+import Data.NNetwork;
 import Interfaces.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
