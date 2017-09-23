@@ -5,6 +5,7 @@
  */
 package Data;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
@@ -14,8 +15,8 @@ import javax.swing.JOptionPane;
  */
 public class ConnectionClass 
 {
-    public java.sql.Connection getConnection(){
-    java.sql.Connection con=null;
+    public Connection getConnection(){
+    Connection con=null;
 //    try
 //    {
 //       Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");

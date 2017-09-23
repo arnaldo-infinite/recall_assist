@@ -313,7 +313,7 @@ public class PredictEvents extends javax.swing.JFrame {
          }
         for(int i =0 ; i<count;i++)
         {
-        model2.addRow(new Object[]{RID[i],Time[i],Contents[i]});
+        model2.addRow(new Object[]{RID[i],Contents[i],Time[i]});
         }
         
      }
