@@ -44,7 +44,6 @@ public class Record extends javax.swing.JFrame {
     
     private void recordingstart(URL url)
     {
-        
         try {
            
             this.cm = new ConfigurationManager(url);
@@ -52,19 +51,12 @@ public class Record extends javax.swing.JFrame {
 	    recognizer = (Recognizer) cm.lookup("recognizer");
 	    microphone = (Microphone) cm.lookup("microphone");
             
-
             /* allocate the resource necessary for the recognizer */
             recognizer.allocate();
-
             
             /* the microphone will keep recording until the program exits */
 	    if (microphone.startRecording()) {
-
-		System.out.println
-		    ("Say: (Good morning | Hello) " +
-                     "( Bhiksha | Evandro | Paul | Philip | Rita | Will )");
-
-		
+               
 		    System.out.println
 			("Start speaking. Press Ctrl-C to quit.\n");
 
@@ -77,26 +69,31 @@ public class Record extends javax.swing.JFrame {
 		    
 		    if (result != null) {
 			resultText = result.getBestFinalResultNoFiller();
-			System.out.println("You said: " + resultText + "\n");
                         
+			System.out.println("You said: " + resultText + "\n"); 
+                        lbl_status.setText("You said: " + resultText);
+                        
+                        recognizer.deallocate();
+                        recognizer=null;
+                        microphone.stopRecording();
+                        microphone.clear();
+                        microphone=null;
+                        cm=null;
 		    } else {
 			System.out.println("I can't hear what you said.\n");
 		    }
 		
 	    } else {
 		System.out.println("Cannot start microphone.");
-		recognizer.deallocate();
-		System.exit(1);
+//		recognizer.deallocate();
+//		System.exit(1);
 	    }
         } catch (IOException e) {
             System.err.println("Problem when loading HelloWorld: " + e);
-            e.printStackTrace();
         } catch (PropertyException e) {
             System.err.println("Problem configuring HelloWorld: " + e);
-            e.printStackTrace();
         } catch (InstantiationException e) {
             System.err.println("Problem creating HelloWorld: " + e);
-            e.printStackTrace();
         }
     }
     
@@ -112,8 +109,8 @@ public class Record extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        but_record = new javax.swing.JButton();
+        lbl_status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -129,44 +126,39 @@ public class Record extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Start Recording");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        but_record.setText("Start Recording");
+        but_record.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                but_recordMousePressed(evt);
+            }
+        });
+        but_record.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                but_recordActionPerformed(evt);
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        lbl_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_status.setText("Click Start Recoding To Begin!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(52, 52, 52))
+            .addComponent(lbl_status, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(but_record, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(30, 30, 30)
+                .addComponent(but_record, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_status)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -191,13 +183,13 @@ public class Record extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void but_recordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_recordActionPerformed
         recordingstart(url);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_but_recordActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void but_recordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_but_recordMousePressed
+        lbl_status.setText("Start speaking !");
+    }//GEN-LAST:event_but_recordMousePressed
 
     /**
      * @param args the command line arguments
@@ -235,8 +227,8 @@ public class Record extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton but_record;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel lbl_status;
     // End of variables declaration//GEN-END:variables
 }

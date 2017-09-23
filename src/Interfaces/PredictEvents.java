@@ -324,9 +324,9 @@ public class PredictEvents extends javax.swing.JFrame {
         String RIDEntered = txt_RID.getText();
          
         ByDayy byday = new ByDayy(RIDEntered);
-        String [] Occurence=byday.getOccureDates();
         int Occurance=byday.getOccurance();
         String [] OccurArray = byday.getOccureDates();
+        
         float DayPredict = (float)Occurance*100/6;
 
         
@@ -344,7 +344,7 @@ public class PredictEvents extends javax.swing.JFrame {
         
         
         
-        ByTwoDay bytwoday = new ByTwoDay("2017-09-04-2", OccurArray);
+        ByTwoDay bytwoday = new ByTwoDay(RIDEntered, OccurArray);
         
         double [] data11 =  bytwoday.gettWS();
         double [] data22 =  bytwoday.gettWC();
@@ -354,7 +354,6 @@ public class PredictEvents extends javax.swing.JFrame {
         
         double predict2 = net2.setPrediction(input1, input2);
      
-        DecimalFormat df=new DecimalFormat("0.00");
         double totalpercentage = Math.round((DayPredict+predict1+predict2)/3)*100/100;
         
         JOptionPane.showMessageDialog(null, "There is a probability of "+totalpercentage+"% for you to do this event today !");

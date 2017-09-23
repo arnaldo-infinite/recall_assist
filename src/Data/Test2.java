@@ -33,22 +33,33 @@ public class Test2 {
         obj.processUnwantedData();
         
         int wordsscore = obj.gettotalscore();
-        
-        System.out.println(wordsscore);
-        System.out.println(sentencescore);
+        int wordcount = obj.getarraywords().length;
         
         
-        String temp = "2017-08-10-1";
+        System.out.println("Word Score - "+wordsscore);
+        System.out.println("No of Words - "+wordcount);
         
-        String str = temp.substring(temp.lastIndexOf('-') + 1);
-        System.out.println(str);
-
-        String Today="";
-         
-        DateManager dmanager = new DateManager();
-        Today=dmanager.getToday();
-        System.out.println(Today);
         
+//        System.out.println(sentencescore);
+//        
+//        
+//        String temp = "2017-08-10-1";
+//        
+//        String str = temp.substring(temp.lastIndexOf('-') + 1);
+//        System.out.println(str);
+//
+//        String Today="";
+//         
+//        DateManager dmanager = new DateManager();
+//        Today=dmanager.getToday();
+//        System.out.println(Today);
+        
+        
+        
+        
+        
+        
+        // **************************************************//
         
 //        ByDay byday = new ByDay("2017-09-03-1");
 //        

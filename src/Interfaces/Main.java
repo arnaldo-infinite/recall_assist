@@ -259,6 +259,7 @@ public class Main extends javax.swing.JFrame {
             IDS=IDS+1;
             
             RID=String.valueOf(IDS);
+            
             stat1.close();
          }
          catch (Exception e1)
@@ -328,12 +329,14 @@ public class Main extends javax.swing.JFrame {
             if (Today.equals(LastDaystring))
             {
                 genRID();
+                String newRID=Today;
+                newRID = newRID+"-"+this.RID;
                 con=objcon.getConnection();
                 try
                 {
                     PreparedStatement stat2=con.prepareStatement("insert into recording values (?,?,?,?)");
 
-                        stat2.setString(1,this.RID);
+                        stat2.setString(1,newRID);
                         stat2.setString(2,this.Content);
                         stat2.setInt(3,this.sentence_score);
                         stat2.setTimestamp(4,timestamp);
@@ -344,9 +347,9 @@ public class Main extends javax.swing.JFrame {
 
                     PreparedStatement stat3=con.prepareStatement("insert into word values (?,?,?)"); 
 
-                        stat2.setString(1,this.RID);
-                        stat2.setInt(2,this.words_score);
-                        stat2.setInt(3,this.words_count);
+                        stat3.setString(1,newRID);
+                        stat3.setInt(2,this.words_score);
+                        stat3.setInt(3,this.words_count);
 
                         int row2=stat3.executeUpdate();
 
