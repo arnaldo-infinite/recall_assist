@@ -59,17 +59,17 @@ public class NNetwork
          // double cost = (predict1-target) * (predict1-target);
           
           
-          double dcost_dpred = 2 * (predict1-target); 
+          double dcost_dpred = 2 * (predict1-target); // power rule
           
-          double dpred_dz = sigmoid(wsum) * (1-sigmoid(wsum));
+          double dpred_dwsum = sigmoid(wsum) * (1-sigmoid(wsum));  
           
-          double dz_dw1 = data1[random];
-          double dz_dw2 = data2[random];
-          double dz_db = 1;
+          double dwsum_dw1 = data1[random];
+          double dwsum_dw2 = data2[random];
+          double dwsum_db = 1;
             
-          double dcost_dw1 = dcost_dpred * dpred_dz * dz_dw1;
-          double dcost_dw2 = dcost_dpred * dpred_dz * dz_dw2;
-          double dcost_db = dcost_dpred * dpred_dz * dz_db;
+          double dcost_dw1 = dcost_dpred * dpred_dwsum * dwsum_dw1;
+          double dcost_dw2 = dcost_dpred * dpred_dwsum * dwsum_dw2;
+          double dcost_db = dcost_dpred * dpred_dwsum * dwsum_db;
           
           w1 -= lrate * dcost_dw1;
           w2 -= lrate * dcost_dw2;
