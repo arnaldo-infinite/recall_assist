@@ -345,7 +345,7 @@ public class PredictEvents extends javax.swing.JFrame {
         double [] data2 =  byoneday.gettWC();
         double [] data3 =  byoneday.getOutputs();
         
-        NNetwork net = new NNetwork(data1, data2, data3);
+        NNetwork net = new NNetwork(data1, data2, data3);  //training
         
         double [] input1 = inputv.gettWS();
         double [] input2 = inputv.gettWC();
@@ -359,7 +359,7 @@ public class PredictEvents extends javax.swing.JFrame {
         double [] data22 =  bytwoday.gettWC();
         double [] data33 =  bytwoday.getOutputs();
         
-        NNetwork net2 = new NNetwork(data11, data22, data33);
+        NNetwork net2 = new NNetwork(data11, data22, data33); //training
         
         double predict2 = net2.setPrediction(input1, input2);
      
