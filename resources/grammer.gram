@@ -7,3 +7,21 @@
 grammar hello;
 
 public <greet> = (Good morning | Hello) ( Bhiksha | Evandro | Paul | Philip | Rita | Will );
+
+public <subject> = (I|Them|He|She|Board|General);
+
+public <verb> = (go|make|know|think|see|Playing|Meeting|Spend|Workout|Walking|Prepare|Swimming|checkup|Going|Report);
+
+public <object> = (Gym|Beach|Park|Complex|Sports|Church|Restaurant|office|report|Client);
+
+public <conj> = (ABOARD|ABOUT|ABOVE|ACROSS|AFTER|ALONG|AMID|AMONG|ANTI|AROUND|INSIDE|IN|FROM|FOLLOWING|UP|UPON);
+
+public <s1> = (<subject>)(<verb>)(<object>);
+
+public <s2> = (<verb>)(<conj>)(<object>);
+
+public <s3> = (<verb>)(<object>);
+
+public <s4> = (<object>)(<verb>);
+
+public <s5> = (<conj>)(<verb>)(<object>);

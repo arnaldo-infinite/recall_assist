@@ -48,7 +48,7 @@ public class InputValues
             while(rst1.next())
             {
                 count++;
-            } 
+            }
             
             tWS = new double[count];
             tWC= new double[count];

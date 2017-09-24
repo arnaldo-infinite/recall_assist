@@ -56,7 +56,7 @@ public class NNetwork
           double predict1 = sigmoid(wsum);  //activate function
           
           
-          double cost = (predict1-target) * (predict1-target);
+         // double cost = (predict1-target) * (predict1-target);
           
           
           double dcost_dpred = 2 * (predict1-target); 
