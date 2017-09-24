@@ -199,7 +199,6 @@ public class PredictEvents extends javax.swing.JFrame {
         clearrows();
         try {
             String DayPassed = cmb_year.getSelectedItem().toString()+"-"+cmb_month.getSelectedItem().toString()+"-"+cmb_date.getSelectedItem().toString();
-            JOptionPane.showMessageDialog(null, DayPassed);
             
             DateManager dmanager = new DateManager();
             String Tomorrow = dmanager.genTomorrow(DayPassed);
@@ -266,7 +265,6 @@ public class PredictEvents extends javax.swing.JFrame {
                 temp ++;
             }
             stat1.close();
-            JOptionPane.showMessageDialog(null, temp);
         }
          catch (Exception e1)
          {
