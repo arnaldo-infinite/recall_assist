@@ -17,12 +17,14 @@ import static org.junit.Assert.*;
  * @author User
  */
 public class WordScorerTest {
-    
-    public WordScorerTest(String Content) {
+   
+    public WordScorerTest() {
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
+
     }
     
     @AfterClass
@@ -41,66 +43,76 @@ public class WordScorerTest {
      * Test of getarraywords method, of class WordScorer.
      */
     @Test
-    public void testGetarraywords() {
-        System.out.println("getarraywords");
-        WordScorer instance = new WordScorer();
-        String[] expResult = null;
-        String[] result = instance.getarraywords();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getarraycountscore method, of class WordScorer.
-     */
-    @Test
-    public void testGetarraycountscore() {
-        System.out.println("getarraycountscore");
-        WordScorer instance = new WordScorer();
-        int[] expResult = null;
-        int[] result = instance.getarraycountscore();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of gettotalscore method, of class WordScorer.
-     */
-    @Test
-    public void testGettotalscore() {
-        System.out.println("gettotalscore");
-        WordScorer instance = new WordScorer();
-        int expResult = 0;
+    public void testGetsentencescore() {
+        System.out.println("getsentencescore");
+        WordScorer instance = new WordScorer("IN CHURCH MEETING");
+        instance.processData();
+        int expResult = 550;
         int result = instance.gettotalscore();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//      fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of processData method, of class WordScorer.
-     */
-    @Test
-    public void testProcessData() {
-        System.out.println("processData");
-        WordScorer instance = new WordScorer();
+    
+        @Test
+    public void testGetwordscore() {
+        System.out.println("getwordscore");
+        WordScorer instance = new WordScorer("IN CHURCH MEETING");
         instance.processData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of processUnwantedData method, of class WordScorer.
-     */
-    @Test
-    public void testProcessUnwantedData() {
-        System.out.println("processUnwantedData");
-        WordScorer instance = new WordScorer();
         instance.processUnwantedData();
+        int expResult = 513;
+        int result = instance.gettotalscore();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//      fail("The test case is a prototype.");
     }
+    
+        @Test
+        public void testGetwordcount() {
+        System.out.println("getwordcount");
+        WordScorer instance = new WordScorer("IN CHURCH MEETING");
+        instance.processData();
+        instance.processUnwantedData();
+        int expResult = 2;
+        String [] arrayLength = instance.getarraywords();
+        int result = arrayLength.length;
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+//      fail("The test case is a prototype.");
+    }
+        
+        
+    
+    
+//    /**
+//     * Test of getarraycountscore method, of class WordScorer.
+//     */
+//    @Test
+//    public void testGetarraycountscore() {
+//        System.out.println("getarraycountscore");
+//        WordScorer instance = new WordScorer();
+//        int[] expResult = null;
+//        int[] result = instance.getarraycountscore();
+//        assertArrayEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of gettotalscore method, of class WordScorer.
+//     */
+//    @Test
+//    public void testGettotalscore() {
+//        System.out.println("gettotalscore");
+//        WordScorer instance = new WordScorer();
+//        int expResult = 0;
+//        int result = instance.gettotalscore();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+
+   
     
 }

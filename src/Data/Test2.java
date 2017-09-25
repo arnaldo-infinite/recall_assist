@@ -24,7 +24,7 @@ public class Test2 {
      */
     public static void main(String[] args) throws Exception
     {
-        String sentence="Playing hockey";
+        String sentence="In Church Meeting";
         sentence=sentence.toUpperCase();
 
         WordScorer obj = new WordScorer(sentence);
@@ -35,7 +35,7 @@ public class Test2 {
         int wordsscore = obj.gettotalscore();
         int wordcount = obj.getarraywords().length;
         
-        
+        System.out.println("Sentence Input - "+sentence);
         System.out.println("Word Score - "+wordsscore);
         System.out.println("Sentence Score - "+sentencescore);
         System.out.println("No of Words - "+wordcount);

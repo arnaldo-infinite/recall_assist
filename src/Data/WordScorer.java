@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
  */
 public class WordScorer 
 {
-   private String Sentence;
+   private String Sentence = "In Church Meeting";
    private String [] wordarray;
    private int [] wordscorearray;
    
